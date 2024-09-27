@@ -71,6 +71,7 @@ def simulate(params, nblocks=3, ntrials=35, opt_act=None, blocks=None, policy='b
     outcomes    = np.zeros((nsubjects, nblocks, ntrials,))
     pe          = np.zeros((nsubjects, nblocks, ntrials,))
     choice_nll  = np.zeros((nsubjects, nblocks, ntrials,))
+    block_prob  = np.zeros((nsubjects, nblocks, ntrials, 2))
 
     subj_dict = {}
     # this_block_probs = [.8,.2] #slot probabilities
@@ -161,7 +162,7 @@ def simulate(params, nblocks=3, ntrials=35, opt_act=None, blocks=None, policy='b
                         size=1,
                         p=R_block_probs)[0]
 
-
+                block_prob[subj_idx, b, t, :] = L_block_probs
                 # if choices[subj_idx, b, t] == 1: #pick the left machine 
                 #     c = 1
                 #     choices_L[subj_idx, b, t] = 1
@@ -239,7 +240,8 @@ def simulate(params, nblocks=3, ntrials=35, opt_act=None, blocks=None, policy='b
                  'opt_act'   : opt_act,
                  'blocks'    : blocks,
                  'pe'        : pe, 
-                 'choice_nll': choice_nll}
+                 'choice_nll': choice_nll,
+                 'block_probs': block_prob}
 
     return subj_dict
 
